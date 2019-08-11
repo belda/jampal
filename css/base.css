@@ -1,0 +1,63 @@
+html, body, #jampal {
+    /* Height and width fallback for older browsers. */
+    height: 100%;
+    width: 100%;
+    /* Set the height to match that of the viewport. */
+    height: 100vh;
+    /* Set the width to match that of the viewport. */
+    width: 100vw;
+    /* Remove any browser-default margins. */
+    margin: 0;
+}
+
+#jampal .head {
+    background: #0f6674;
+    height: 10vh;
+}
+#jampal .main>div {
+    height: 90vh;
+    display: inline-block;
+    float:left;
+}
+#jampal .parts {
+    background: #86cfda;
+    width: 23vw;
+}
+#jampal .parts .part{
+    font-size: 7vh; text-overflow: ellipsis; overflow: hidden;
+}
+#jampal .chords .part {
+    width: 77vw;
+    position:relative;
+}
+#jampal .chords .round {
+    display: inline-block;
+}
+#jampal .chords .chbox_outer {
+    display: inline;
+    /*float:left;*/
+}
+#jampal .chords .chbox {
+    display: block;
+    float: left;
+    width: 7vw;
+    height: 7vw;
+    border: 1px solid #999;
+    line-height: initial;
+    margin: .4vh 0;
+}
+#jampal .chords .chbox {font-size: 4vmin;}
+#jampal .chords .chbox::first-letter {font-size: 6.7vw;}
+#jampal .chords .chbox.repeat {
+    font-size: 2vmin;
+    color: #666;
+    border: none;
+    padding: 3vmin .5vmin 0 0;
+    text-align: right;
+    width: 5vw;
+}
+#jampal .chords .chbox.repeat::first-letter {font-size: 4vmin;}
+#jampal .part {
+    min-height: 15vh;
+    border-bottom: 1px dashed #aaa; margin: 1vh 0;}
+}
