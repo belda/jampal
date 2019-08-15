@@ -5,6 +5,7 @@ var data = {
     tempo: 120,
     parts : [
         {name : "Sloka",
+         notes: "My note very very long note, that I want to put here so that we do not forget about it",
          rounds: [
              {
                  repeat: 3,
@@ -38,6 +39,17 @@ var data = {
 
          ]},
         {name : "Refren",
+         rounds: [
+             {
+                 repeat: 2,
+                 chords: [
+                     { ch : "Am", leng : 2 },
+                     { ch : "F", leng : 2 }
+                 ]
+             }
+         ]},
+        {name : "Bridge",
+         color: "#aaffff",
          rounds: [
              {
                  repeat: 2,

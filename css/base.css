@@ -29,17 +29,26 @@ html, body, #jampal {
     position: relative;
     min-height: 11vh;
     border-bottom: 1px dashed #aaa;
-    padding: .5vh 0;}
+    padding: .5vh 0;
+    color: #383838;
+    }
 #jampal  .partname{
     position: relative;
     float:left;
     width: 23vw;
     font-size: 7vh; text-overflow: ellipsis; overflow: hidden;
 }
-#jampal .part.active {
-    background-color: rgba(255, 240, 70, .1);
-    /*border: .5vh solid rgba(255, 240, 70, .3);*/
+#jampal .part .notes {
+    margin: 0.3vh 8vw 0.3vh 2vw;
+    padding: 0.5vh 1vw;
+    font-size: 4vh;
+    background-color: rgba(220,220,200, .5);
+    color: #333;
+    border: 1px solid grey;
 }
+
+#jampal .part.active {    background-color: rgba(255, 240, 70, .1); border-top: 2px solid red; border-bottom: 2px solid red;}
+#jampal .part.active .partname { color: #000;}
 #jampal .part_chords {
     width: 77vw;
     position:relative;
@@ -75,26 +84,45 @@ html, body, #jampal {
 }
 #jampal .part_chords .round.empty {padding-left: 1vh;}
 #jampal .part_chords .chbox.empty { color: rgba(0,200,0, .3); border: 1px solid #CCC;}
-#jampal .part_chords .chbox.len2 { width: 14vw; }
-#jampal .part_chords .chbox.len3 { width: 21vw; }
-#jampal .part_chords .chbox.len4 { width: 28vw; }
-#jampal .part_chords .chbox.len5 { width: 28vw; }
-#jampal .part_chords .chbox.len6 { width: 28vw; }
-#jampal .part_chords .chbox.len7 { width: 28vw; }
-#jampal .part_chords .chbox.len8 { width: 28vw; }
-#jampal .part_chords .chbox.len9 { width: 28vw; }
-#jampal .part_chords .chbox.len10 { width: 28vw; }
-#jampal .part_chords .chbox.len11 { width: 28vw; }
-#jampal .part_chords .chbox.len12 { width: 28vw; }
-#jampal .part_chords .chbox.len13 { width: 28vw; }
-#jampal .part_chords .chbox.len14 { width: 28vw; }
-#jampal .part_chords .chbox.len15 { width: 28vw; }
-#jampal .part_chords .chbox.len16 { width: 28vw; }
+
+#jampal.small1 .part { min-height: 8vh;}
+#jampal.small1 .partname { font-size: 7.5vh;}
+#jampal.small1 .chbox { width: 6vw; height: 5.8vw; font-size: 4vmin;}
+#jampal.small1 .part_chords .chbox::first-letter {font-size: 5.5vw;}
+#jampal.small1 .part_chords .chbox.repeat::first-letter {font-size: 4.5vmin;}
+#jampal.small1 .part_chords .chbox.repeat { width: 3vw; font-size: 1.8vmin; padding: 1.9vmin .4vmin 0 0;}
+#jampal.small1 .part .notes { font-size: 3.4vh; margin: 0.1vh 8vw 0.2vh 2vw; padding: 0.3vh 1vw; }
+
+#jampal.small2 .part { min-height: 6vh;}
+#jampal.small2 .partname { font-size: 5.8vh;}
+#jampal.small2 .chbox { width: 5vw; height: 4.8vw; font-size: 3vmin;}
+#jampal.small2 .part_chords .chbox::first-letter {font-size: 4.5vw;}
+#jampal.small2 .part_chords .chbox.repeat::first-letter {font-size: 3.5vmin;}
+#jampal.small2 .part_chords .chbox.repeat { width: 2.5vw; font-size: 1.5vmin; padding: 1.9vmin .4vmin 0 0;}
+#jampal.small2 .part .notes { font-size: 2.9vh; margin: 0 8vw 0 2vw; padding: 0 1vw; }
+
+#jampal.small3 .part { min-height: 5vh;}
+#jampal.small3 .partname { font-size: 4.85vh;}
+#jampal.small3 .chbox { width: 4vw; height: 3.8vw; font-size: 2vmin;}
+#jampal.small3 .part_chords .chbox::first-letter {font-size: 3.5vw;}
+#jampal.small3 .part_chords .chbox.repeat::first-letter {font-size: 2.5vmin;}
+#jampal.small3 .part_chords .chbox.repeat { width: 2vw; font-size: 2.1vmin; padding: 1.9vmin .4vmin 0 0;}
+#jampal.small3 .part .notes { font-size: 2vh; margin: 0 8vw 0 2vw; padding: 0 1vw; }
+
+#jampal.small4 .part { min-height: 3.8vh;}
+#jampal.small4 .partname { font-size: 3.7vh;}
+#jampal.small4 .chbox { width: 3.5vw; height: 3.7vw; font-size: 2vmin;}
+#jampal.small4 .part_chords .chbox::first-letter {font-size: 2.7vw;}
+#jampal.small4 .part_chords .chbox.repeat::first-letter {font-size: 2vmin;}
+#jampal.small4 .part_chords .chbox.repeat { width: 2vw; font-size: 1.8vmin; padding: 1.9vmin .4vmin 0 0;}
+#jampal.small4 .part .notes { font-size: 1.5vh; margin: 0 8vw 0 2vw; padding: 0 1vw; }
+
 
 #jampal .part .colorpicker {
     position: absolute;
     top: 0px; right: 0px;
 }
+
 
 #jampal .head>div {
     display: block;
@@ -111,6 +139,8 @@ html, body, #jampal {
     vertical-align: middle;
 
 }
+#jampal #noteedit {    width: 100%;    height: 80vh;    font-size: 1.8em;}
+
 #jampal .head>div a {color: white; }
 #jampal .head .repetitions,#jampal .head .chordlength {  padding-left: 20px; padding-top: 2.1vh;}
 #jampal .head .chordlength { margin-left: 0; }
@@ -122,5 +152,5 @@ html, body, #jampal {
 #jampal .head .songname input { width: 25vw; font-size: 5vh;    padding: 0; border: 0; background: transparent;}
 #jampal .head .signature {width: 60px;}
 #jampal .head .siga {position:absolute; top:7px; left:2px; width: 35px;}
-#jampal .head .sigb {position:absolute; top:27px; left:21px;  width: 35px;}
+#jampal .head .sigb {position:absolute; top:29px; left:21px;  width: 35px;}
 #jampal .head .settings { float: right;}
