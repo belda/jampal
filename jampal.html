@@ -5,14 +5,38 @@
 	<title>Jam Pal</title>
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/spectrum.css">
 </head>
 <body>
 
 <div id="jampal">
-	<div class="head"></div>
+	<div class="head">
+		<div class="songname"><input type="text" name="songname"/></div>
+		<div class="signature">
+			<input type="number" min="1" max="20" value="4" name="signatureA" class="siga" />
+			<input type="number" min="1" max="20" value="4" name="signatureB"  class="sigb"/>
+		</div>
+		<div class="tempo"><input type="number" min="1" max="300" value="120" name="tempo"/><br />&nbsp;&nbsp;<i>bpm</i></div>
+		<div class="addpart"><a href="#" title="(P)">Add<br/>Part</a></div>
+		<div class="repetitions">
+			<a href="#" class="plus" title="(+)">+</a>
+			<a href="#" class="minus"  title="(-)">-</a>
+			<span>repeat</span>
+		</div>
+		<div class="chordlength">
+				<a href="#" class="plus" title="(L)">+</a>
+				<a href="#" class="minus"  title="(K)">-</a>
+				<span>length</span>
+		</div>
+		<div class="mode">
+			<select name="modeselect">
+				<option value="chords">chords</option>
+			</select>
+		</div>
+		<div class="settings"><a href="#">settings</a></div>
+	</div>
 	<div class="main ">
-		<div class="parts"></div>
-		<div class="chords"></div>
+		<div class="thediv"></div>
 	</div>
 </div>
 
@@ -21,6 +45,8 @@
 <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/bootstrap.bundle.js"></script>
+<script src="js/jquery.hotkeys.js"></script>
+<script src='js/spectrum.js'></script>
 <script src="js/jampal.js"></script>
 <script src="js/example_data1.js"></script>
 <script>
