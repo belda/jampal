@@ -67,8 +67,10 @@ html, body, #jampal {
     line-height: initial;
     margin: .4vh 0;
     z-index: 20;
+    position: relative;
 }
 #jampal .part_chords .chbox::first-letter {font-size: 6.3vw;}
+#jampal .part_chords .chbox .sharp {    position: absolute; left: 4vw;}
 #jampal .part_chords .chbox.repeat {
     font-size: 2vmin;
     color: #666;
@@ -88,6 +90,7 @@ html, body, #jampal {
 #jampal.small1 .part { min-height: 8vh;}
 #jampal.small1 .partname { font-size: 7.5vh;}
 #jampal.small1 .chbox { width: 6vw; height: 5.8vw; font-size: 4vmin;}
+#jampal.small1 .part_chords .chbox .sharp {    position: absolute; left: 3.3vw;}
 #jampal.small1 .part_chords .chbox::first-letter {font-size: 5.5vw;}
 #jampal.small1 .part_chords .chbox.repeat::first-letter {font-size: 4.5vmin;}
 #jampal.small1 .part_chords .chbox.repeat { width: 3vw; font-size: 1.8vmin; padding: 1.9vmin .4vmin 0 0;}
@@ -96,6 +99,7 @@ html, body, #jampal {
 #jampal.small2 .part { min-height: 6vh;}
 #jampal.small2 .partname { font-size: 5.8vh;}
 #jampal.small2 .chbox { width: 5vw; height: 4.8vw; font-size: 3vmin;}
+#jampal.small2 .part_chords .chbox .sharp {    position: absolute; left: 3vw;}
 #jampal.small2 .part_chords .chbox::first-letter {font-size: 4.5vw;}
 #jampal.small2 .part_chords .chbox.repeat::first-letter {font-size: 3.5vmin;}
 #jampal.small2 .part_chords .chbox.repeat { width: 2.5vw; font-size: 1.5vmin; padding: 1.9vmin .4vmin 0 0;}
@@ -104,6 +108,7 @@ html, body, #jampal {
 #jampal.small3 .part { min-height: 5vh;}
 #jampal.small3 .partname { font-size: 4.85vh;}
 #jampal.small3 .chbox { width: 4vw; height: 3.8vw; font-size: 2vmin;}
+#jampal.small3 .part_chords .chbox .sharp {    position: absolute; left: 2.5vw;}
 #jampal.small3 .part_chords .chbox::first-letter {font-size: 3.5vw;}
 #jampal.small3 .part_chords .chbox.repeat::first-letter {font-size: 2.5vmin;}
 #jampal.small3 .part_chords .chbox.repeat { width: 2vw; font-size: 2.1vmin; padding: 1.9vmin .4vmin 0 0;}
@@ -112,17 +117,23 @@ html, body, #jampal {
 #jampal.small4 .part { min-height: 3.8vh;}
 #jampal.small4 .partname { font-size: 3.7vh;}
 #jampal.small4 .chbox { width: 3.5vw; height: 3.7vw; font-size: 2vmin;}
+#jampal.small4 .part_chords .chbox .sharp {    position: absolute; left: 2vw;}
 #jampal.small4 .part_chords .chbox::first-letter {font-size: 2.7vw;}
 #jampal.small4 .part_chords .chbox.repeat::first-letter {font-size: 2vmin;}
 #jampal.small4 .part_chords .chbox.repeat { width: 2vw; font-size: 1.8vmin; padding: 1.9vmin .4vmin 0 0;}
 #jampal.small4 .part .notes { font-size: 1.5vh; margin: 0 8vw 0 2vw; padding: 0 1vw; }
 
 
-#jampal .part .colorpicker {
-    position: absolute;
-    top: 0px; right: 0px;
+#jampal .part .colorpicker { position: absolute;   top: 0px; right: 0px;}
+#jampal .part .time {
+    position: absolute;   bottom: 0px; right: 0px;
+    font-size: 1.6vh;
+    color: #999;
+    width: 7vw;
+    text-align: right;
 }
-
+#jampal .part .time span { display: block;}
+#jampal .part .time .a { font-size: 1.3vh;}
 
 #jampal .head>div {
     display: block;
@@ -143,14 +154,27 @@ html, body, #jampal {
 
 #jampal .head>div a {color: white; }
 #jampal .head .repetitions,#jampal .head .chordlength {  padding-left: 20px; padding-top: 2.1vh;}
-#jampal .head .chordlength { margin-left: 0; }
+#jampal .head .metronome {margin-left: 0; width: 40px; }
+#jampal .head .metronome span {display: block; color: #4e555b;}
+#jampal .head .metronome span.active { color: white; font-weight: bold; }
 #jampal .head .plus { position: absolute; left: 0px; top: 0px; font-size: 25px; padding: 3px;}
 #jampal .head .minus { position: absolute; left: 3px; top: 25px; font-size: 25px; padding: 3px; }
-#jampal .head .tempo { margin-left: 0; }
+#jampal .head .tempo { margin-left: 1px; margin-right: 1px; }
 #jampal .head .tempo input { width: 50px;}
 #jampal .head .songname { margin-top: .5vh;}
 #jampal .head .songname input { width: 25vw; font-size: 5vh;    padding: 0; border: 0; background: transparent;}
-#jampal .head .signature {width: 60px;}
+#jampal .head .signature {width: 60px; margin-right: 0;}
 #jampal .head .siga {position:absolute; top:7px; left:2px; width: 35px;}
 #jampal .head .sigb {position:absolute; top:29px; left:21px;  width: 35px;}
 #jampal .head .settings { float: right;}
+
+#jampal #tempooverlay {
+    position: absolute;
+    z-index:40;
+    width: 100%;
+    height: 90vh;
+    top: 10vh;
+    background-color: rgba(0,255,0, .7);
+    display: none;
+}
+#jampal #tempooverlay.first { background-color: rgba(0,0,255, .7); }

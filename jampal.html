@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/base.css">
 	<link rel="stylesheet" href="css/spectrum.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 
@@ -16,24 +17,28 @@
 			<input type="number" min="1" max="20" value="4" name="signatureA" class="siga" />
 			<input type="number" min="1" max="20" value="4" name="signatureB"  class="sigb"/>
 		</div>
-		<div class="tempo"><input type="number" min="1" max="300" value="120" name="tempo"/><br />&nbsp;&nbsp;<i>bpm</i></div>
+		<div class="tempo"><input type="number" min="1" max="300" value="120" name="tempo" id="bpm"/><br />&nbsp;&nbsp;<!--i>bpm</i--> <a href="#"><span class="material-icons" id="taptempo">insert_link</span></a></div>
+		<div class="metronome">
+			<a href="#"><span class="material-icons" id="metronome_toggle">call_merge</span></a>
+			<a href="#"><span class="material-icons" id="running_toggle">redo</span></a>
+		</div>
 		<div class="addpart"><a href="#" title="(P)">Add<br/>Part</a></div>
 		<div class="repetitions">
 			<a href="#" class="plus" title="(+)">+</a>
 			<a href="#" class="minus"  title="(-)">-</a>
-			<span>repeat</span>
+			<span class="material-icons" >sync</span>
 		</div>
 		<div class="chordlength">
 				<a href="#" class="plus" title="(L)">+</a>
 				<a href="#" class="minus"  title="(K)">-</a>
-				<span>length</span>
+				<span class="material-icons" >swap_horiz</span>
 		</div>
 		<div class="mode">
 			<select name="modeselect">
 				<option value="chords">chords</option>
 			</select>
 		</div>
-		<div class="settings"><a href="#">settings</a></div>
+		<div class="settings"><a href="#"><span class="material-icons" >settings</span></a></div>
 	</div>
 	<div class="main ">
 		<div class="thediv"></div>
@@ -59,6 +64,52 @@
 	    </div>
 	  </div>
 	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg " role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="helpModalLabel">Help</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <h6>keyboard control</h6>
+		      <ul>
+			      <li><b>?</b>, <b>/</b> - this help</li>
+		      </ul>
+		      <ul>
+			      <li><b>&uarr; &darr;</b> - select part</li>
+			      <li><b>&larr; &rarr; (ctrl + &larr; &rarr;)</b> - select chords (rounds)</li>
+            <li><b>alt + &uarr; &darr;</b> - move part up/down</li>
+		        <li><b>P</b> - add new part</li>
+			      <li><b>B</b> - duplicate selected part</li>
+			      <li><b>backspace, delete</b> - remove selected item</li>
+		      </ul>
+		      <ul>
+			      <li><b>space</b> - edit selected part name</li>
+			      <li><b>N</b> - edit note for this part</li>
+			      <li><b>+</b>, <b>-</b> - increase/decrease round repetitions</li>
+		        <li><b>K</b>, <b>L</b> - increase/decrease chord length</li>
+			      <li><b>T</b> - tap metronome tempo</li>
+			      <li><b>R</b> - toggle metronome</li>
+		      </ul>
+          <ul>
+			      <li><b>C</b>,<b>D</b>,<b>E</b>,<b>F</b>,<b>G</b>,<b>A</b>,<b>H</b> - set root note of chord</li>
+			      <li><b>m</b> - set as minor</li>
+			      <li><b>#</b>, <b>3</b> - add halftone </li>
+	          <li><b>7</b> - set as 7 chord type</li>
+			      <li><b>s</b> - set as sub chord</li>
+			      <li><b>2</b> - set as octova higher chord</li>
+		      </ul>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div id="tempooverlay" data-n="1">&nbsp;</div>
 </div>
 
 
@@ -69,8 +120,10 @@
 <script src="js/jquery.hotkeys.js"></script>
 <script src='js/spectrum.js'></script>
 <!--<script src='js/jquery-sortable.js'></script>-->
+<script src="js/metronome.js"></script>
 <script src="js/jampal.js"></script>
 <script src="js/example_data1.js"></script>
+<script src="js/example_nobody.js"></script>
 <script>
 	$(document).ready(function(){
 	    initJamPal();

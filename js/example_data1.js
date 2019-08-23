@@ -11,29 +11,29 @@ var data = {
                  repeat: 3,
                  notes: "Slow antre",
                  chords: [
-                     { ch : "C", leng : 1 },
-                     { ch : "D", leng : 1 },
-                     { ch : "Am", leng : 1 },
-                     { ch : "G", leng : 1 }
+                     { root : "C", leng : 1 },
+                     { root : "D", leng : 1 },
+                     { root : "Am", chord : "m", leng : 1 },
+                     { root : "G", leng : 1 }
                  ]
              },
              {
                  repeat: 1,
                  chords: [
-                     { ch : "C", leng : 1 },
-                     { ch : "D", leng : 1 },
-                     { ch : "Am", leng : 1 },
-                     { ch : "F", leng : 1, notes: "pauza na konci" }
+                     { root : "C", leng : 1 },
+                     { root : "D", leng : 1 },
+                     { root : "Am", chord : "m", leng : 1 },
+                     { root : "F", leng : 1, notes: "pauza na konci" }
                  ]
              },
              {
                  repeat: 3,
                  notes: "Slow antre",
                  chords: [
-                     { ch : "C", leng : 1 },
-                     { ch : "D", leng : 1 },
-                     { ch : "Am", leng : 1 },
-                     { ch : "G", leng : 1 }
+                     { root : "C", leng : 1 },
+                     { root : "D", leng : 1 },
+                     { root : "Am", chord : "m", leng : 1 },
+                     { root : "G", leng : 1 }
                  ]
              },
 
@@ -43,8 +43,8 @@ var data = {
              {
                  repeat: 2,
                  chords: [
-                     { ch : "Am", leng : 2 },
-                     { ch : "F", leng : 2 }
+                     { root : "Am", chord : "m", leng : 2 },
+                     { root : "F", leng : 2 }
                  ]
              }
          ]},
@@ -54,8 +54,8 @@ var data = {
              {
                  repeat: 2,
                  chords: [
-                     { ch : "Am", leng : 2 },
-                     { ch : "F", leng : 2 }
+                     { root : "Am", chord : "m", leng : 2 },
+                     { root : "F", leng : 2 }
                  ]
              }
          ]}

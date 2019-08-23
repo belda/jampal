@@ -27,6 +27,13 @@ function initJamPal() {
     $("#jampal input[name=signatureA]").val(data.signatureA);
     $("#jampal input[name=signatureB]").val(data.signatureB);
     $("#jampal input[name=tempo]").val(data.tempo);
+    $("#jampal .siga, #jampal .sigb, #bpm, #jampal input[name=songname]").change(function(){
+        data.name = $("#jampal input[name=songname]").val();
+        data.signatureA = $("#jampal input[name=signatureA]").val();
+        data.signatureB = $("#jampal input[name=signatureB]").val();
+        data.tempo = $("#jampal input[name=tempo]").val();
+        redrawSeconds();
+    });
     for (var di in data.parts) {
         var d = data.parts[di];
         console.log("Working on "+d.name);
@@ -55,6 +62,8 @@ function initJamPal() {
       $("#noteedit").focus();
     });
     // $("#noteModal").on('hidden.bs.modal', syncNote);
+    redrawSeconds();
+    sizeRedraw();
 }
 
 function getPartBox(partdata=null){
@@ -91,13 +100,33 @@ function getPartBox(partdata=null){
         $(this).blur();
     });
     partbox.append(colorp);
+    partbox.append($("<div class='time'><span class='a'></span><span class='b'></span></div>"));
     return $("<div class='part_outer' style='background-color: "+hexToRgbA(clr, .4)+"'/>").append(partbox);
 }
 function getChordBox(ch) { //takes the selected chord data
     if (ch == null) {
         var chbox = $("<span class='chbox chord blank len1' data-len='1'><span class='u'>&nbsp;</span></span>");
     } else {
-        var chbox = $("<span class='chbox chord len"+ch.leng+"' data-len='"+ch.leng+"'><span class='u'>"+ch.ch+"</span></span>");
+        var chbox = $("<span class='chbox chord len"+ch.leng+"' data-len='"+ch.leng+"'></span>");
+        chbox.data("root", ch.root);
+        chbox.append($("<span class='u'>"+ch.root+"</span>"));
+        if (ch.octave != undefined && ch.octave>1) {
+            chbox.data("octave", ch.octave);
+            chbox.append($("<span class='octave'>"+ch.octave+"</span>"));
+        }
+        if (ch.chord != undefined && ch.chord != "major") {
+            chbox.data("chord", ch.chord);
+            if (ch.chord == "minor")
+                chbox.append($("<span class='chord'>m</span>"));
+            else if (ch.chord == "sub")
+                chbox.append($("<span class='chord'>s</span>"));
+            else if (ch.chord == "7")
+                chbox.append($("<span class='chord'>7</span>"));
+        }
+        if (ch.sharp == true) {
+            chbox.data('sharp', true)
+            chbox.append($("<span class='sharp'>#</span>"));
+        }
     }
     chbox.click(function(){ chboxSelect($(this)) });
     return $("<span class='chbox_outer'>").append(chbox);
@@ -115,6 +144,7 @@ function addEmptyRound() {
     round.insertBefore($(".chbox.empty.active").parent().parent());
     setTimeout(function(){chboxSelect(activateAfter.children().first());}, 100);
     sizeRedraw();
+    redrawSeconds();
 }
 
 function addPart() {
@@ -129,6 +159,7 @@ function addPart() {
     newpart.find(".chbox.empty").addClass("active");
     addEmptyRound();
     sizeRedraw();
+    redrawSeconds();
     setTimeout(function(){horizontalSelect(-1);}, 100);
 }
 
@@ -179,9 +210,11 @@ function isRoundBlank(round) {
     return l==data.signatureB;
 }
 
-function chboxSelect(chbox) {
-    console.log("selected ", chbox);
-    if (chbox.hasClass('active')) {
+function chboxSelect(chbox, force_on=false) {
+    console.log("+++++++++selected chbox ", chbox);
+    if (chbox.hasClass("chbox_outer"))
+        chbox = chbox.children().first();
+    if (chbox.hasClass('active') && !force_on) {
         $("#jampal .chbox, #jampal .round").removeClass("active")
     } else {
         $("#jampal .chbox, #jampal .round").removeClass("active")
@@ -190,7 +223,6 @@ function chboxSelect(chbox) {
     }
     $(".part.active").removeClass("active");
     var part = chbox.parent().parent().parent().parent();
-    console.log("is this the right part ", part);
     part.addClass("active");
 }
 
@@ -227,6 +259,7 @@ function duplicatePart(){
         partSelect(np.children().first());
     }
     sizeRedraw();
+    redrawSeconds();
 }
 
 
@@ -278,6 +311,7 @@ function verticalMove(step) {
     } else if (all.index(active)+step < all.length) {
         all.eq(all.index(active)+step ).parent().after(active.parent());
     }
+    redrawSeconds();
 }
 
 function deleteChord(chord, n=0) {
@@ -304,29 +338,45 @@ function genericDelete(){
         }
     }
     sizeRedraw();
+    redrawSeconds();
 }
 
+
+function getChord(box) {
+    var ch = {
+        root : box.data('root'),
+        leng : box.data('len'),
+        chord : box.data('chord'),
+        sharp : box.data('sharp')
+    };
+    return ch;
+}
 
 function setChord(ch) {
     if ($(".chbox.empty.active").length==1)  addEmptyRound();
 
+    var ac = $(".chbox.chord.active");
+    var chord = getChord(ac);
     if (CHORDCHARS.indexOf(ch.toUpperCase()) >=0 ) {
-        var ac = $(".chbox.chord.active");
-        ac.find(".u").html(ch.toUpperCase());
-        ac.removeClass("blank");
+        chord.root = ch.toUpperCase();
     }
     if (MODIFIERCHARS.indexOf(ch.toLowerCase()) >=0 ) {
-        var ac = $(".chbox.chord.active");
-        if (ac.length == 1) {
-            var curr = ac.find(".u").html();
-            if (curr.indexOf(ch)>0) {
-                curr = curr.replace(ch, "");
-            } else {
-                curr+= ch;
-            }
-            ac.find(".u").html(curr);
+        if (ch.toLowerCase() == "m") {
+            chord.chord = (chord.chord == "minor") ? "major" : "minor";
+        } else if (ch.toLowerCase() == "s") {
+            chord.chord = (chord.chord == "sub") ? "major" : "sub";
+        } else if (ch.toLowerCase() == "7") {
+            chord.chord = (chord.chord == "7") ? "major" : "7";
         }
+        if (ch.toLowerCase() == '#' || ch.toLowerCase() == '3' )
+            chord.sharp = chord.sharp != true;
+        if (ch.toLowerCase() == '2' )
+            chord.octave = (chord.octave == 2) ? null : 2;
     }
+    var chbox = getChordBox(chord);
+    chbox.insertAfter(ac.parent());
+    ac.parent().remove();
+    chboxSelect(chbox);
 }
 
 function sizeRedraw(step=0) { //checks if we need to resize
@@ -370,13 +420,43 @@ function syncNote() {
     }
 }
 
+
+function humanSeconds(s) {
+    return(s-(s%=60))/60+(9<s?':':':0')+s;
+}
+function getPartSeconds(part) {
+    var total = 0;
+    part.find(".round").each(function(){
+        var rl = 0;
+        $(this).find(".chbox.chord").each(function(){
+            console.log($(this).data('len'));
+            rl= rl + $(this).data('len');
+        });
+        console.log("round=",rl);
+        if (rl>0)
+            total= total + $(this).data('repeat')*rl;
+    });
+    return Math.round(total*data.signatureA *  60/data.tempo);
+}
+function redrawSeconds() {
+    var total = 0;
+    $(".part").each(function(){
+        var ps = getPartSeconds($(this));
+        total= total+ ps;
+        console.log("part total", total);
+        $(this).find(".time .a").html(humanSeconds(ps));
+        $(this).find(".time .b").html(humanSeconds(total));
+    });
+}
+
+
 /********* KEYBOARD CONTROL ****************/
 function initControls() {
     // $.hotkeys.options.filterInputAcceptingElements = false;
     // $.hotkeys.options.filterContentEditable = false;
 
-    $(document).bind('keydown', 'up', function(){ verticalSelect(-1) });
-    $(document).bind('keydown', 'down', function(){ verticalSelect(+1) });
+    $(document).bind('keydown', 'up ctrl+up', function(){ verticalSelect(-1) });
+    $(document).bind('keydown', 'down ctrl+down', function(){ verticalSelect(+1) });
     $(document).bind('keydown', 'right', function(){ horizontalSelect(+1) });
     $(document).bind('keydown', 'left', function(){ horizontalSelect(-1) });
     $(document).bind('keydown', 'ctrl+right', function(){ horizontalSelect(+data.signatureB) });
@@ -392,7 +472,7 @@ function initControls() {
     $(document).bind('keydown', 'l', function(){ changeChordLength(+1) });
     $(document).bind('keydown', 'k', function(){ changeChordLength(-1) });
     $(document).bind('keydown', 'b', function(){ duplicatePart() });
-
+    $(document).bind('keydown', 'r', toggleMetronome );
 
     $(document).bind('keydown', 'n', function(){ editPartNote($(".part.active")); });
     $(document).bind('keydown', 'p', function(){ addPart(); });
@@ -416,17 +496,19 @@ function initControls() {
     $(document).bind('keydown', '7', function(){ setChord("7"); });
     $(document).bind('keydown', 's', function(){ setChord("s"); });
 
+    $(document).bind('keydown', '/', function(){  $('#helpModal').modal('toggle'); });
+    $(document).bind('keydown', '?', function(){  $('#helpModal').modal('toggle'); });
+
     /*********** ICON BINDING ******************/
     $("#jampal .head .addpart").click(addPart);
+    $("#jampal .head #metronome_toggle").click(toggleMetronome);
+    $("#jampal .head .tempo #taptempo").click(getTempo);
+    $("#jampal .head #running_toggle").click( function () { $(this).toggleClass("active") });
+    $("#jampal .head .repetitions .plus").click(  function(){ changeRepetitions(+1) });
+    $("#jampal .head .repetitions .minus").click( function(){ changeRepetitions(-1) });
+    $("#jampal .head .chordlength .plus").click( function(){ changeChordLength(+1) });
+    $("#jampal .head .chordlength .minus").click( function(){ changeChordLength(-1) });
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -445,4 +527,8 @@ function hexToRgbA(hex, alpha=1){
         return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+','+alpha+')';
     }
     throw new Error('Bad Hex');
+}
+
+function str_pad_left(string,pad,length) {
+    return (new Array(length+1).join(pad)+string).slice(-length);
 }
