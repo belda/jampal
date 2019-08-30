@@ -38,6 +38,15 @@ html, body, #jampal {
     width: 23vw;
     font-size: 7vh; text-overflow: ellipsis; overflow: hidden;
 }
+#jampal .partcontrol {
+    position: absolute;
+    margin-left: 16vw;
+    opacity: .1;
+    z-index:15;
+}
+#jampal .part:hover .partcontrol { opacity: 1;}
+#jampal .partcontrol span { color: #999; cursor: pointer;}
+#jampal .partcontrol span:hover { color: #0f6674; }
 #jampal .part .notes {
     margin: 0.3vh 8vw 0.3vh 2vw;
     padding: 0.5vh 1vw;
@@ -166,7 +175,10 @@ html, body, #jampal {
 #jampal .head .signature {width: 60px; margin-right: 0;}
 #jampal .head .siga {position:absolute; top:7px; left:2px; width: 35px;}
 #jampal .head .sigb {position:absolute; top:29px; left:21px;  width: 35px;}
-#jampal .head .settings { float: right;}
+#jampal .head .settings { float: right; width: 40px;}
+#jampal .head .settings a {text-decoration: none; width:35px;}
+#jampal .head .settings  span {display: block; width:35px;}
+
 
 #jampal #tempooverlay {
     position: absolute;

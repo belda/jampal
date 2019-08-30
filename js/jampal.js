@@ -22,7 +22,11 @@ function initJamPal() {
     console.log("Configuring hk")
     initControls();
     console.log("data=", data);
+    console.log("drawing data");
+    drawJampal();
+}
 
+function drawJampal() {
     $("#jampal input[name=songname]").val(data.name);
     $("#jampal input[name=signatureA]").val(data.signatureA);
     $("#jampal input[name=signatureB]").val(data.signatureB);
@@ -34,6 +38,7 @@ function initJamPal() {
         data.tempo = $("#jampal input[name=tempo]").val();
         redrawSeconds();
     });
+    $("#jampal .thediv").empty();
     for (var di in data.parts) {
         var d = data.parts[di];
         console.log("Working on "+d.name);
@@ -84,6 +89,25 @@ function getPartBox(partdata=null){
         if (!$(this).hasClass("chbox"))
             partSelect($(this));
     });
+
+    var part_controlbox = $("<div class='partcontrol'/>");
+    var rmvb = $("<span class='material-icons'>delete_outline</span>");
+    rmvb.click(function(){
+        if (confirm("Are you sure you want to remove whole part "+$(this).parents(".part").data('name')+"?")) {
+            $(this).parents('.part_outer').remove();
+        }
+    });
+    part_controlbox.append(rmvb);
+    var dplb = $("<span class='material-icons'>filter_2</span>");
+    dplb.click(function(){  setTimeout(duplicatePart, 80) });
+    part_controlbox.append(dplb);
+    var upb = $("<span class='material-icons'>keyboard_arrow_up</span>");
+    upb.click(function(){  setTimeout( function(){ verticalMove(-1);}, 80)});
+    part_controlbox.append(upb);
+    var dwnb = $("<span class='material-icons'>keyboard_arrow_down</span>");
+    dwnb.click(function(){  setTimeout( function(){ verticalMove(1);}, 80)});
+    part_controlbox.append(dwnb);
+    partbox.append(part_controlbox);
 
     var chordspart = $("<div class='part_chords'/>");
     var chboxempty = $("<span class='chbox empty'><span class='u'>+</span></span>");
@@ -334,7 +358,7 @@ function genericDelete(){
     } else {
         var ac = $(".part.active");
         if (ac.length == 1 && confirm("Are you sure you want to remove whole part "+ac.data('name')+"?")) {
-            ac.remove();
+            ac.parent().remove();
         }
     }
     sizeRedraw();
@@ -508,6 +532,8 @@ function initControls() {
     $("#jampal .head .repetitions .minus").click( function(){ changeRepetitions(-1) });
     $("#jampal .head .chordlength .plus").click( function(){ changeChordLength(+1) });
     $("#jampal .head .chordlength .minus").click( function(){ changeChordLength(-1) });
+
+    $("#jampal .head .settings .hlp").click( function() { $('#helpModal').modal('toggle'); } );
 }
 
 
