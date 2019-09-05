@@ -20,7 +20,7 @@ It is best suited to run on a fullscreen fullHD TV (eg. from a RaspberryPI:-)
 * Landscape 1920x1080 display (can run on HDready, but not as nicely)
 
 ## Demo
-You can check demo [JamPal demo](http://jampal.blda.cz/)
+You can check demo [JamPal demo](https://belda.github.io/jampal/jampal.html)
 
 ## TODOs
 * nicer metronome
