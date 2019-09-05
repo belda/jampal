@@ -14,20 +14,23 @@ It is best suited to run on a fullscreen fullHD TV (eg. from a RaspberryPI:-)
 * estimated song duration
 * client side JavaScript, can be run offline
 * notes
+* quick keyboard control
 
 ## Requirements
 * Chromium/Google Chrome browser
 * Landscape 1920x1080 display (can run on HDready, but not as nicely)
 
 ## Demo
-You can check demo [JamPal demo](https://belda.github.io/jampal/jampal.html)
+You can check demo (F11 for fullscreen before) [JamPal demo](https://belda.github.io/jampal/jampal.html)
 
 ## TODOs
 * nicer metronome
 * audio click for metronome
 * another section for lyrics
-* some music theory tools using teoria.js
+* some music theory tools using teoria.js (https://github.com/saebekassebil/teoria)
+* integrate https://github.com/tardate/jtab
 * NextCloud integration
+* fix font size after resize
 
 ## Licence
 MIT licence
