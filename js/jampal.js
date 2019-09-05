@@ -21,6 +21,8 @@ function initJamPal() {
     initChordLengthStyles();
     console.log("Configuring hk")
     initControls();
+    console.log("Initializing storage");
+    initStorage();
     console.log("data=", data);
     console.log("drawing data");
     drawJampal();
@@ -141,11 +143,11 @@ function getChordBox(ch) { //takes the selected chord data
         if (ch.chord != undefined && ch.chord != "major") {
             chbox.data("chord", ch.chord);
             if (ch.chord == "minor")
-                chbox.append($("<span class='chord'>m</span>"));
+                chbox.append($("<span class='chordchord'>m</span>"));
             else if (ch.chord == "sub")
-                chbox.append($("<span class='chord'>s</span>"));
+                chbox.append($("<span class='chordchord'>s</span>"));
             else if (ch.chord == "7")
-                chbox.append($("<span class='chord'>7</span>"));
+                chbox.append($("<span class='chordchord'>7</span>"));
         }
         if (ch.sharp == true) {
             chbox.data('sharp', true)
@@ -534,6 +536,8 @@ function initControls() {
     $("#jampal .head .chordlength .minus").click( function(){ changeChordLength(-1) });
 
     $("#jampal .head .settings .hlp").click( function() { $('#helpModal').modal('toggle'); } );
+    $("#jampal .head .storage").click( function() { $('#storageModal').modal('toggle'); } );
+
 }
 
 

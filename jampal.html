@@ -13,6 +13,7 @@
 <div id="jampal">
 	<div class="head">
 		<div class="songname"><input type="text" name="songname"/></div>
+		<div class="storage"><span class="material-icons">storage</span></div>
 		<div class="signature">
 			<input type="number" min="1" max="20" value="4" name="signatureA" class="siga" />
 			<input type="number" min="1" max="20" value="4" name="signatureB"  class="sigb"/>
@@ -104,6 +105,31 @@
 			      <li><b>s</b> - set as sub chord</li>
 			      <li><b>2</b> - set as octova higher chord</li>
 		      </ul>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="storageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg " role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="storageModalLabel">Load &amp; save</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <h6>Save song</h6>
+		      <div><a href="#" id="downloadLink">download.json</a></div>
+		      <hr/>
+		      <h6>Load song</h6>
+		      <div><input id="fileField" type="file" /></div>
+		      <hr/>
+		      <h6>New song</h6>
+		      <div><a href="#" id="newSongLink">clear everything</a></div>
 	      </div>
 	    </div>
 	  </div>

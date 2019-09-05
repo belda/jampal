@@ -43,4 +43,45 @@ function newSong() {
         tempo: 120,
         parts : []
     };
+    $("#storageModal").modal('hide');
+}
+
+
+function saveSong() {
+    console.log("saving song");
+    var dd = collectData();
+    console.log(dd);
+    var myJSON = JSON.stringify( dd );
+    var text = encodeURIComponent( myJSON );
+    var $link = $("<a />");
+
+    // <a download="filename.txt" href='data:application/octet-stream,...'></a>
+    $link
+      .attr( "download", data.name+".jpl" )
+      .attr( "href", "data:application/octet-stream," + text )
+      .appendTo( "body" )
+      .get(0)
+      .click()
+      .remove();
+}
+
+var reader = new FileReader();
+function loadSong() {
+    var file = this.files[0];
+    // read the file as text
+    reader.readAsText( file );
+    // and then then load event will trigger ...
+}
+reader.onload = function( ev ) {
+   var contents = JSON.parse( decodeURIComponent( ev.target.result ) );
+   data = contents;
+   drawJampal();
+   $("#storageModal").modal('hide');
+};
+
+
+function initStorage() {
+    $("#downloadLink").click(saveSong);
+    $("#newSongLink").click(newSong);
+    $("#fileField").on("change", loadSong );
 }

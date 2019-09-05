@@ -172,6 +172,7 @@ html, body, #jampal {
 #jampal .head .tempo input { width: 50px;}
 #jampal .head .songname { margin-top: .5vh;}
 #jampal .head .songname input { width: 25vw; font-size: 5vh;    padding: 0; border: 0; background: transparent;}
+#jampal .head .storage span { font-size: 6vh; cursor: pointer; }
 #jampal .head .signature {width: 60px; margin-right: 0;}
 #jampal .head .siga {position:absolute; top:7px; left:2px; width: 35px;}
 #jampal .head .sigb {position:absolute; top:29px; left:21px;  width: 35px;}
