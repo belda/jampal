@@ -7,136 +7,141 @@
 	<link rel="stylesheet" href="css/base.css">
 	<link rel="stylesheet" href="css/spectrum.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<style>
+		html, body {
+			overflow: hidden;
+		}
+	</style>
 </head>
 <body>
 
 <div id="jampal">
 	<div class="head">
 		<div class="songname"><input type="text" name="songname"/></div>
-		<div class="storage"><span class="material-icons">storage</span></div>
-		<div class="signature">
-			<input type="number" min="1" max="20" value="4" name="signatureA" class="siga" />
-			<input type="number" min="1" max="20" value="4" name="signatureB"  class="sigb"/>
+			<div class="storage"><span class="material-icons">storage</span></div>
+			<div class="signature">
+				<input type="number" min="1" max="20" value="4" name="signatureA" class="siga" />
+				<input type="number" min="1" max="20" value="4" name="signatureB"  class="sigb"/>
+			</div>
+			<div class="tempo"><input type="number" min="1" max="300" value="120" name="tempo" id="bpm"/><br />&nbsp;&nbsp;<!--i>bpm</i--> <a href="#"><span class="material-icons" id="taptempo">insert_link</span></a></div>
+			<div class="metronome">
+				<a href="#"><span class="material-icons" id="metronome_toggle">call_merge</span></a>
+				<a href="#"><span class="material-icons" id="running_toggle">redo</span></a>
+			</div>
+			<div class="addpart"><a href="#" title="(P)">Add<br/>Part</a></div>
+			<div class="repetitions">
+				<a href="#" class="plus" title="(+)">+</a>
+				<a href="#" class="minus"  title="(-)">-</a>
+				<span class="material-icons" >sync</span>
+			</div>
+			<div class="chordlength">
+					<a href="#" class="plus" title="(L)">+</a>
+					<a href="#" class="minus"  title="(K)">-</a>
+					<span class="material-icons" >swap_horiz</span>
+			</div>
+			<div class="mode">
+				<select name="modeselect">
+					<option value="chords">chords</option>
+				</select>
+			</div>
+			<div class="settings"><a href="#"><span class="set material-icons" >settings</span></a><a href="#" ><span class="hlp material-icons" >help</span></a></div>
 		</div>
-		<div class="tempo"><input type="number" min="1" max="300" value="120" name="tempo" id="bpm"/><br />&nbsp;&nbsp;<!--i>bpm</i--> <a href="#"><span class="material-icons" id="taptempo">insert_link</span></a></div>
-		<div class="metronome">
-			<a href="#"><span class="material-icons" id="metronome_toggle">call_merge</span></a>
-			<a href="#"><span class="material-icons" id="running_toggle">redo</span></a>
+		<div class="main ">
+			<div class="thediv"></div>
 		</div>
-		<div class="addpart"><a href="#" title="(P)">Add<br/>Part</a></div>
-		<div class="repetitions">
-			<a href="#" class="plus" title="(+)">+</a>
-			<a href="#" class="minus"  title="(-)">-</a>
-			<span class="material-icons" >sync</span>
+
+		<!-- Modal -->
+		<div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg " role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Note</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<textarea id="noteedit"></textarea>
+					</div>
+					<!--<div class="modal-footer">-->
+						<!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+						<!--<button type="button" class="btn btn-primary">Save changes</button>-->
+					<!--</div>-->
+				</div>
+			</div>
 		</div>
-		<div class="chordlength">
-				<a href="#" class="plus" title="(L)">+</a>
-				<a href="#" class="minus"  title="(K)">-</a>
-				<span class="material-icons" >swap_horiz</span>
+
+		<!-- Modal -->
+		<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg " role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="helpModalLabel">Help</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<h6>keyboard control</h6>
+						<ul>
+							<li><b>?</b>, <b>/</b> - this help</li>
+						</ul>
+						<ul>
+							<li><b>&uarr; &darr;</b> - select part</li>
+							<li><b>&larr; &rarr; (ctrl + &larr; &rarr;)</b> - select chords (rounds)</li>
+							<li><b>alt + &uarr; &darr;</b> - move part up/down</li>
+							<li><b>P</b> - add new part</li>
+							<li><b>B</b> - duplicate selected part</li>
+							<li><b>backspace, delete</b> - remove selected item</li>
+						</ul>
+						<ul>
+							<li><b>space</b> - edit selected part name</li>
+							<li><b>N</b> - edit note for this part</li>
+							<li><b>+</b>, <b>-</b> - increase/decrease round repetitions</li>
+							<li><b>K</b>, <b>L</b> - increase/decrease chord length</li>
+							<li><b>T</b> - tap metronome tempo</li>
+							<li><b>R</b> - toggle metronome</li>
+						</ul>
+						<ul>
+							<li><b>C</b>,<b>D</b>,<b>E</b>,<b>F</b>,<b>G</b>,<b>A</b>,<b>H</b> - set root note of chord</li>
+							<li><b>m</b> - set as minor</li>
+							<li><b>#</b>, <b>3</b> - add halftone </li>
+							<li><b>7</b> - set as 7 chord type</li>
+							<li><b>s</b> - set as sub chord</li>
+							<li><b>2</b> - set as octova higher chord</li>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="mode">
-			<select name="modeselect">
-				<option value="chords">chords</option>
-			</select>
+
+
+		<!-- Modal -->
+		<div class="modal fade" id="storageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg " role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="storageModalLabel">Load &amp; save</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<h6>Save song</h6>
+						<div><a href="#" id="downloadLink">download.json</a></div>
+						<hr/>
+						<h6>Load song</h6>
+						<div><input id="fileField" type="file" accept=".jpl" /></div>
+						<hr/>
+						<h6>New song</h6>
+						<div><a href="#" id="newSongLink">clear everything</a></div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="settings"><a href="#"><span class="set material-icons" >settings</span></a><a href="#" ><span class="hlp material-icons" >help</span></a></div>
-	</div>
-	<div class="main ">
-		<div class="thediv"></div>
-	</div>
 
-	<!-- Modal -->
-	<div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-lg " role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">Note</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <textarea id="noteedit"></textarea>
-	      </div>
-	      <!--<div class="modal-footer">-->
-	        <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-	        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-	      <!--</div>-->
-	    </div>
-	  </div>
+		<div id="tempooverlay" data-n="1">&nbsp;</div>
 	</div>
-
-	<!-- Modal -->
-	<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-lg " role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="helpModalLabel">Help</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <h6>keyboard control</h6>
-		      <ul>
-			      <li><b>?</b>, <b>/</b> - this help</li>
-		      </ul>
-		      <ul>
-			      <li><b>&uarr; &darr;</b> - select part</li>
-			      <li><b>&larr; &rarr; (ctrl + &larr; &rarr;)</b> - select chords (rounds)</li>
-            <li><b>alt + &uarr; &darr;</b> - move part up/down</li>
-		        <li><b>P</b> - add new part</li>
-			      <li><b>B</b> - duplicate selected part</li>
-			      <li><b>backspace, delete</b> - remove selected item</li>
-		      </ul>
-		      <ul>
-			      <li><b>space</b> - edit selected part name</li>
-			      <li><b>N</b> - edit note for this part</li>
-			      <li><b>+</b>, <b>-</b> - increase/decrease round repetitions</li>
-		        <li><b>K</b>, <b>L</b> - increase/decrease chord length</li>
-			      <li><b>T</b> - tap metronome tempo</li>
-			      <li><b>R</b> - toggle metronome</li>
-		      </ul>
-          <ul>
-			      <li><b>C</b>,<b>D</b>,<b>E</b>,<b>F</b>,<b>G</b>,<b>A</b>,<b>H</b> - set root note of chord</li>
-			      <li><b>m</b> - set as minor</li>
-			      <li><b>#</b>, <b>3</b> - add halftone </li>
-	          <li><b>7</b> - set as 7 chord type</li>
-			      <li><b>s</b> - set as sub chord</li>
-			      <li><b>2</b> - set as octova higher chord</li>
-		      </ul>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-
-
-	<!-- Modal -->
-	<div class="modal fade" id="storageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-lg " role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="storageModalLabel">Load &amp; save</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <h6>Save song</h6>
-		      <div><a href="#" id="downloadLink">download.json</a></div>
-		      <hr/>
-		      <h6>Load song</h6>
-		      <div><input id="fileField" type="file" accept=".jpl" /></div>
-		      <hr/>
-		      <h6>New song</h6>
-		      <div><a href="#" id="newSongLink">clear everything</a></div>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-
-	<div id="tempooverlay" data-n="1">&nbsp;</div>
-</div>
 
 
 </body>
@@ -153,7 +158,7 @@
 <script src="js/example_nobody.js"></script>
 <script>
 	$(document).ready(function(){
-	    initJamPal();
+		initJamPal();
 	});
 </script>
 </html>

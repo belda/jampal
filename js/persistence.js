@@ -1,4 +1,3 @@
-
 function collectData() {
     data.name = $("#jampal input[name=songname]").val();
     data.signatureA = $("#jampal input[name=signatureA]").val();
@@ -85,3 +84,26 @@ function initStorage() {
     $("#newSongLink").click(newSong);
     $("#fileField").on("change", loadSong );
 }
+
+// Function to handle loading .jpl file from file dialog
+function handleLoadFile(fileContent) {
+    var contents = JSON.parse(decodeURIComponent(fileContent));
+    data = contents;
+    drawJampal();
+}
+
+// Function to handle saving .jpl file to file dialog
+function handleSaveFile(filePath) {
+    var dd = collectData();
+    var myJSON = JSON.stringify(dd);
+    fs.writeFileSync(filePath, myJSON, 'utf-8');
+}
+
+// Listen for load-file and save-file events from main process
+const { ipcRenderer } = require('electron');
+ipcRenderer.on('load-file', (event, fileContent) => {
+    handleLoadFile(fileContent);
+});
+ipcRenderer.on('save-file', (event, filePath) => {
+    handleSaveFile(filePath);
+});

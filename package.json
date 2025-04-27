@@ -1,0 +1,12 @@
+{
+  "name": "jampal",
+  "version": "1.0.0",
+  "description": "A handy tool for musicians to have an overview of song chords and structure.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron --disable-gpu ."
+  },
+  "dependencies": {
+    "electron": "^13.1.7"
+  }
+}
