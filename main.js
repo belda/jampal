@@ -8,7 +8,8 @@ function createWindow() {
     height: 1080,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
-    }
+    },
+    autoHideMenuBar: true
   });
 
   mainWindow.loadFile('jampal.html');

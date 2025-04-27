@@ -4,7 +4,7 @@
   "description": "A handy tool for musicians to have an overview of song chords and structure.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron --disable-gpu ."
   },
   "dependencies": {
     "electron": "^13.1.7"
