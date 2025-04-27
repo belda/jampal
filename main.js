@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, dialog } = require('electron');
+const { app, BrowserWindow, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
@@ -12,42 +12,6 @@ function createWindow() {
   });
 
   mainWindow.loadFile('jampal.html');
-
-  const menuTemplate = [
-    {
-      label: 'File',
-      submenu: [
-        {
-          label: 'Open',
-          click: async () => {
-            const { canceled, filePaths } = await dialog.showOpenDialog({
-              properties: ['openFile'],
-              filters: [{ name: 'Jampal Files', extensions: ['jpl'] }]
-            });
-            if (!canceled && filePaths.length > 0) {
-              const filePath = filePaths[0];
-              const fileContent = fs.readFileSync(filePath, 'utf-8');
-              mainWindow.webContents.send('load-file', fileContent);
-            }
-          }
-        },
-        {
-          label: 'Save As',
-          click: async () => {
-            const { canceled, filePath } = await dialog.showSaveDialog({
-              filters: [{ name: 'Jampal Files', extensions: ['jpl'] }]
-            });
-            if (!canceled && filePath) {
-              mainWindow.webContents.send('save-file', filePath);
-            }
-          }
-        }
-      ]
-    }
-  ];
-
-  const menu = Menu.buildFromTemplate(menuTemplate);
-  Menu.setApplicationMenu(menu);
 }
 
 app.on('ready', createWindow);
