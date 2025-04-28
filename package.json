@@ -4,9 +4,31 @@
   "description": "A handy tool for musicians to have an overview of song chords and structure.",
   "main": "main.js",
   "scripts": {
-    "start": "electron --disable-gpu ."
+    "start": "electron --disable-gpu .",
+    "build": "electron-builder"
   },
   "dependencies": {
     "electron": "^13.1.7"
+  },
+  "devDependencies": {
+    "electron-builder": "^22.11.7"
+  },
+  "build": {
+    "appId": "com.example.jampal",
+    "productName": "JamPal",
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ],
+      "category": "Utility"
+    }
   }
 }

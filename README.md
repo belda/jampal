@@ -32,5 +32,64 @@ You can check demo (F11 for fullscreen before) [JamPal demo](https://belda.githu
 * NextCloud integration
 * fix font size after resize
 
+## Building and Packaging
+
+### Prerequisites
+- Node.js
+- npm
+- Electron
+
+### Installation
+1. Clone the repository:
+   ```
+   git clone https://github.com/belda/jampal.git
+   cd jampal
+   ```
+
+2. Install dependencies:
+   ```
+   npm install
+   ```
+
+3. Install electron-builder:
+   ```
+   npm install electron-builder --save-dev
+   ```
+
+### Building
+To build the app for Mac, Fedora, Ubuntu, and Raspbian, run:
+```
+npm run build
+```
+
+### Running the Packaged App
+After building, you can find the packaged app in the `dist` directory. Follow the platform-specific instructions to run the app:
+
+#### Mac
+1. Open the `dist` directory.
+2. Find the `.dmg` file and open it.
+3. Drag the app to the Applications folder.
+
+#### Fedora/Ubuntu
+1. Open the `dist` directory.
+2. Find the `.AppImage` or `.deb` file.
+3. For `.AppImage`, make it executable and run it:
+   ```
+   chmod +x jampal-<version>.AppImage
+   ./jampal-<version>.AppImage
+   ```
+4. For `.deb`, install it using dpkg:
+   ```
+   sudo dpkg -i jampal-<version>.deb
+   ```
+
+#### Raspbian
+1. Open the `dist` directory.
+2. Find the `.deb` file.
+3. Install it using dpkg:
+   ```
+   sudo dpkg -i jampal-<version>.deb
+   ```
+
 ## Licence
 MIT licence
