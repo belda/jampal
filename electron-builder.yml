@@ -9,6 +9,5 @@ mac:
 linux:
   target:
     - AppImage
-    - deb
     - rpm
   category: Utility
