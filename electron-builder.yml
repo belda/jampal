@@ -1,0 +1,13 @@
+appId: com.example.jampal
+productName: JamPal
+directories:
+  output: dist
+
+mac:
+  target: dmg
+
+linux:
+  target:
+    - AppImage
+    - rpm
+  category: Utility
