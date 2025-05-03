@@ -62,6 +62,7 @@ function saveSong() {
       .get(0)
       .click()
       .remove();
+    encodeDataToURL(dd);
 }
 
 var reader = new FileReader();
@@ -83,6 +84,11 @@ function initStorage() {
     $("#downloadLink").click(saveSong);
     $("#newSongLink").click(newSong);
     $("#fileField").on("change", loadSong );
+
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('data')) {
+        decodeDataFromURL();
+    }
 }
 
 // Function to handle loading .jpl file from file dialog
@@ -107,3 +113,50 @@ ipcRenderer.on('load-file', (event, fileContent) => {
 ipcRenderer.on('save-file', (event, filePath) => {
     handleSaveFile(filePath);
 });
+
+function encodeDataToURL(data) {
+    var compressedData = compressData(data);
+    var encodedData = encodeURIComponent(compressedData);
+    var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?data=' + encodedData;
+    window.history.replaceState({path: newUrl}, '', newUrl);
+}
+
+function decodeDataFromURL() {
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('data')) {
+        var encodedData = urlParams.get('data');
+        var compressedData = decodeURIComponent(encodedData);
+        var decodedData = decompressData(compressedData);
+        data = JSON.parse(decodedData);
+        drawJampal();
+    }
+}
+
+function compressData(data) {
+    // Implement compression logic here
+    var compressedData = JSON.stringify(data);
+    compressedData = compressedData.replace(/"repeat":/g, 'r:');
+    compressedData = compressedData.replace(/"chords":/g, 'c:');
+    compressedData = compressedData.replace(/"root":/g, 'o:');
+    compressedData = compressedData.replace(/"leng":/g, 'l:');
+    compressedData = compressedData.replace(/"sharp":/g, 's:');
+    compressedData = compressedData.replace(/"chord":/g, 'h:');
+    compressedData = compressedData.replace(/"notes":/g, 'n:');
+    compressedData = compressedData.replace(/"color":/g, 'cl:');
+    compressedData = compressedData.replace(/"name":/g, 'nm:');
+    return compressedData;
+}
+
+function decompressData(compressedData) {
+    // Implement decompression logic here
+    compressedData = compressedData.replace(/r:/g, '"repeat":');
+    compressedData = compressedData.replace(/c:/g, '"chords":');
+    compressedData = compressedData.replace(/o:/g, '"root":');
+    compressedData = compressedData.replace(/l:/g, '"leng":');
+    compressedData = compressedData.replace(/s:/g, '"sharp":');
+    compressedData = compressedData.replace(/h:/g, '"chord":');
+    compressedData = compressedData.replace(/n:/g, '"notes":');
+    compressedData = compressedData.replace(/cl:/g, '"color":');
+    compressedData = compressedData.replace(/nm:/g, '"name":');
+    return compressedData;
+}
