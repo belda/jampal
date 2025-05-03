@@ -26,6 +26,7 @@ function initJamPal() {
     console.log("data=", data);
     console.log("drawing data");
     drawJampal();
+    decodeDataFromURL(); // P612f
 }
 
 function drawJampal() {
@@ -71,6 +72,7 @@ function drawJampal() {
     // $("#noteModal").on('hidden.bs.modal', syncNote);
     redrawSeconds();
     sizeRedraw();
+    encodeDataToURL(data); // Pd280
 }
 
 function getPartBox(partdata=null){

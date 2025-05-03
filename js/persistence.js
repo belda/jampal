@@ -62,6 +62,7 @@ function saveSong() {
       .get(0)
       .click()
       .remove();
+    encodeDataToURL(dd);
 }
 
 var reader = new FileReader();
@@ -83,6 +84,11 @@ function initStorage() {
     $("#downloadLink").click(saveSong);
     $("#newSongLink").click(newSong);
     $("#fileField").on("change", loadSong );
+
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('data')) {
+        decodeDataFromURL();
+    }
 }
 
 // Function to handle loading .jpl file from file dialog
@@ -107,3 +113,33 @@ ipcRenderer.on('load-file', (event, fileContent) => {
 ipcRenderer.on('save-file', (event, filePath) => {
     handleSaveFile(filePath);
 });
+
+function encodeDataToURL(data) {
+    var compressedData = compressData(data);
+    var encodedData = encodeURIComponent(compressedData);
+    var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?data=' + encodedData;
+    window.history.replaceState({path: newUrl}, '', newUrl);
+}
+
+function decodeDataFromURL() {
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('data')) {
+        var encodedData = urlParams.get('data');
+        var compressedData = decodeURIComponent(encodedData);
+        var decodedData = decompressData(compressedData);
+        data = JSON.parse(decodedData);
+        drawJampal();
+    }
+}
+
+function compressData(data) {
+    // Implement compression logic here
+    // Placeholder: return the original data for now
+    return JSON.stringify(data);
+}
+
+function decompressData(compressedData) {
+    // Implement decompression logic here
+    // Placeholder: return the original data for now
+    return compressedData;
+}
