@@ -126,7 +126,8 @@ function decodeDataFromURL() {
     if (urlParams.has('data')) {
         var encodedData = urlParams.get('data');
         var compressedData = decodeURIComponent(encodedData);
-        var decodedData = decompressData(compressedData);
+        var formattedData = formatJSON(compressedData);
+        var decodedData = decompressData(formattedData);
         data = JSON.parse(decodedData);
         drawJampal();
     }
@@ -159,4 +160,8 @@ function decompressData(compressedData) {
     compressedData = compressedData.replace(/cl:/g, '"color":');
     compressedData = compressedData.replace(/nm:/g, '"name":');
     return compressedData;
+}
+
+function formatJSON(jsonString) {
+    return jsonString.replace(/(\w+):/g, '"$1":');
 }
