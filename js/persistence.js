@@ -115,7 +115,8 @@ ipcRenderer.on('save-file', (event, filePath) => {
 });
 
 function encodeDataToURL(data) {
-    var compressedData = compressData(data);
+    var formattedData = formatJSON(JSON.stringify(data));
+    var compressedData = compressData(formattedData);
     var encodedData = encodeURIComponent(compressedData);
     var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?data=' + encodedData;
     window.history.replaceState({path: newUrl}, '', newUrl);
@@ -134,32 +135,32 @@ function decodeDataFromURL() {
 }
 
 function compressData(data) {
-    // Implement compression logic here
-    var compressedData = JSON.stringify(data);
-    compressedData = compressedData.replace(/"repeat":/g, 'r:');
-    compressedData = compressedData.replace(/"chords":/g, 'c:');
-    compressedData = compressedData.replace(/"root":/g, 'o:');
-    compressedData = compressedData.replace(/"leng":/g, 'l:');
-    compressedData = compressedData.replace(/"sharp":/g, 's:');
-    compressedData = compressedData.replace(/"chord":/g, 'h:');
-    compressedData = compressedData.replace(/"notes":/g, 'n:');
-    compressedData = compressedData.replace(/"color":/g, 'cl:');
-    compressedData = compressedData.replace(/"name":/g, 'nm:');
+    var formattedData = formatJSON(data);
+    var compressedData = JSON.stringify(formattedData);
+    compressedData = compressedData.replace(/"repeat":/g, 'r');
+    compressedData = compressedData.replace(/"chords":/g, 'c');
+    compressedData = compressedData.replace(/"root":/g, 'o');
+    compressedData = compressedData.replace(/"leng":/g, 'l');
+    compressedData = compressedData.replace(/"sharp":/g, 's');
+    compressedData = compressedData.replace(/"chord":/g, 'h');
+    compressedData = compressedData.replace(/"notes":/g, 'n');
+    compressedData = compressedData.replace(/"color":/g, 'cl');
+    compressedData = compressedData.replace(/"name":/g, 'nm');
     return compressedData;
 }
 
 function decompressData(compressedData) {
-    // Implement decompression logic here
-    compressedData = compressedData.replace(/r:/g, '"repeat":');
-    compressedData = compressedData.replace(/c:/g, '"chords":');
-    compressedData = compressedData.replace(/o:/g, '"root":');
-    compressedData = compressedData.replace(/l:/g, '"leng":');
-    compressedData = compressedData.replace(/s:/g, '"sharp":');
-    compressedData = compressedData.replace(/h:/g, '"chord":');
-    compressedData = compressedData.replace(/n:/g, '"notes":');
-    compressedData = compressedData.replace(/cl:/g, '"color":');
-    compressedData = compressedData.replace(/nm:/g, '"name":');
-    return compressedData;
+    compressedData = compressedData.replace(/r/g, '"repeat":');
+    compressedData = compressedData.replace(/c/g, '"chords":');
+    compressedData = compressedData.replace(/o/g, '"root":');
+    compressedData = compressedData.replace(/l/g, '"leng":');
+    compressedData = compressedData.replace(/s/g, '"sharp":');
+    compressedData = compressedData.replace(/h/g, '"chord":');
+    compressedData = compressedData.replace(/n/g, '"notes":');
+    compressedData = compressedData.replace(/cl/g, '"color":');
+    compressedData = compressedData.replace(/nm/g, '"name":');
+    var formattedData = formatJSON(compressedData);
+    return formattedData;
 }
 
 function formatJSON(jsonString) {
